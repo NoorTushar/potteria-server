@@ -45,6 +45,13 @@ async function run() {
 
       // Items Related APIs
 
+      // GET API to view all items
+      app.get("/items", async (req, res) => {
+         const cursor = itemsCollection.find();
+         const result = await cursor.toArray();
+         res.send(result);
+      });
+
       // POST API to create an item
       app.post("/items", async (req, res) => {
          const item = req.body;
