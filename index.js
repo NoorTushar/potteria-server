@@ -77,6 +77,14 @@ async function run() {
          res.send(result);
       });
 
+      // DELETE API to delete an item
+      app.delete("/items/:id", async (req, res) => {
+         const deleteId = req.params.id;
+         const query = { _id: new ObjectId(deleteId) };
+         const result = await itemsCollection.deleteOne(query);
+         res.send(result);
+      });
+
       // Send a ping to confirm a successful connection
       //   await client.db("admin").command({ ping: 1 });
       console.log(
