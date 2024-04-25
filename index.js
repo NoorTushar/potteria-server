@@ -31,12 +31,25 @@ async function run() {
       // Create Database and Collection
       const database = client.db("potteriaDB");
       const usersCollection = database.collection("users");
+      const itemsCollection = database.collection("items");
 
-      // POST API to create user
+      // User Related APIs
+
+      // POST API to create a user
       app.post("/users", async (req, res) => {
          const user = req.body;
          console.log(user);
          const result = await usersCollection.insertOne(user);
+         res.send(result);
+      });
+
+      // Items Related APIs
+
+      // POST API to create an item
+      app.post("/items", async (req, res) => {
+         const item = req.body;
+         console.log(item);
+         const result = await itemsCollection.insertOne(item);
          res.send(result);
       });
 
