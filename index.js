@@ -60,6 +60,15 @@ async function run() {
          res.send(result);
       });
 
+      // GET API to view all items according to email filter
+      app.get("/items/users/:email", async (req, res) => {
+         const searchEmail = req.params.email;
+         const query = { user_email: searchEmail };
+         const cursor = itemsCollection.find(query);
+         const result = await cursor.toArray();
+         res.send(result);
+      });
+
       // POST API to create an item
       app.post("/items", async (req, res) => {
          const item = req.body;
