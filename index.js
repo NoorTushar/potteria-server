@@ -1,6 +1,6 @@
 const express = require("express");
 const cors = require("cors");
-const { MongoClient, ServerApiVersion } = require("mongodb");
+const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 require("dotenv").config();
 
 const app = express();
@@ -49,6 +49,14 @@ async function run() {
       app.get("/items", async (req, res) => {
          const cursor = itemsCollection.find();
          const result = await cursor.toArray();
+         res.send(result);
+      });
+
+      // GET API to view a single item
+      app.get("/items/:id", async (req, res) => {
+         const searchId = req.params.id;
+         const query = { _id: new ObjectId(searchId) };
+         const result = await itemsCollection.findOne(query);
          res.send(result);
       });
 
