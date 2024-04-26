@@ -77,6 +77,37 @@ async function run() {
          res.send(result);
       });
 
+      // PUT API to update an item
+      app.put("/items/:id", async (req, res) => {
+         const updateId = req.params.id;
+         const item = req.body;
+
+         const filter = { _id: new ObjectId(updateId) };
+         const options = { upsert: true };
+
+         const updatedItem = {
+            $set: {
+               image: item.image,
+               item_name: item.item_name,
+               subcategory_Name: item.subcategory_Name,
+               short_description: item.short_description,
+               price: item.price,
+               rating: item.rating,
+               customization: item.customization,
+               processing_time: item.processing_time,
+               stock_status: item.stock_status,
+            },
+         };
+
+         const result = await itemsCollection.updateOne(
+            filter,
+            updatedItem,
+            options
+         );
+
+         res.send(result);
+      });
+
       // DELETE API to delete an item
       app.delete("/items/:id", async (req, res) => {
          const deleteId = req.params.id;
