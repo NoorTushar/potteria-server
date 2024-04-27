@@ -61,7 +61,7 @@ async function run() {
       });
 
       // GET API to view all items according to email filter
-      app.get("/items/users/:email", async (req, res) => {
+      app.get("/myItems/:email", async (req, res) => {
          const searchEmail = req.params.email;
          const query = { user_email: searchEmail };
          const cursor = itemsCollection.find(query);
