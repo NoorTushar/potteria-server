@@ -32,6 +32,7 @@ async function run() {
       const database = client.db("potteriaDB");
       const usersCollection = database.collection("users");
       const itemsCollection = database.collection("items");
+      const subCategoriesCollection = database.collection("subCategories");
 
       // User Related APIs
 
@@ -113,6 +114,13 @@ async function run() {
          const deleteId = req.params.id;
          const query = { _id: new ObjectId(deleteId) };
          const result = await itemsCollection.deleteOne(query);
+         res.send(result);
+      });
+
+      // GET API to view all subcategories
+      app.get("/subcategories", async (req, res) => {
+         const cursor = subCategoriesCollection.find();
+         const result = await cursor.toArray();
          res.send(result);
       });
 
