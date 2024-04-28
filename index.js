@@ -124,6 +124,25 @@ async function run() {
          res.send(result);
       });
 
+      // GET API to view a single subcategory
+      app.get("/subcategories/:sub_name", async (req, res) => {
+         const searchName = req.params.sub_name;
+         console.log(searchName);
+         const query = { sub_name: searchName };
+         const result = await subCategoriesCollection.findOne(query);
+         res.send(result);
+      });
+
+      // GET API to view all items according to sub category
+      app.get("/subcategories/:sub_name/items", async (req, res) => {
+         const searchSubName = req.params.sub_name;
+         console.log(searchSubName);
+         const query = { subcategory_Name: searchSubName };
+         const cursor = itemsCollection.find(query);
+         const result = await cursor.toArray();
+         res.send(result);
+      });
+
       // Send a ping to confirm a successful connection
       //   await client.db("admin").command({ ping: 1 });
       console.log(
